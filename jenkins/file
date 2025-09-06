@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        // Set environment variables (or use Jenkins credentials plugin)
+        AWS_DEFAULT_REGION = 'ap-south-1'
+        TF_WORKSPACE = 'default'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Cloning repository...'
+                sh 
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                echo 'Initializing Terraform...'
+                sh 'terraform init -input=false'
+            }
+        }
+
+        stage('Terraform Format Check') {
+            steps {
+                echo 'Checking formatting...'
+                sh 'terraform fmt -check'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                echo 'Validating Terraform files...'
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                echo 'Planning infrastructure changes...'
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Approve Apply?') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    input message: 'Do you want to apply these changes?', ok: 'Yes, Apply'
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                echo 'Applying infrastructure changes...'
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Terraform apply completed successfully.'
+        }
+        failure {
+            echo '❌ Terraform failed.'
+        }
+    }
+}
