@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning repository...'
-                sh 
+                git branch: 'main', url: 'https://github.com/Ravichandu-git/terraformtest.git'
             }
         }
 
