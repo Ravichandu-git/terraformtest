@@ -8,6 +8,6 @@ resource "aws_instance" "first_instance" {
   key_name      = "august-2025"
 
   tags = {
-    Name = "my-ec2-instance"
+    Name = "test-instance"
   }
 }
