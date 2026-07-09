@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_instance" "first_instance" {
   ami           = "ami-01a00762f46d584a1"
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   key_name      = "julykey-2026"
 
   tags = {
