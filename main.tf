@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "first_instance" {
-  ami           = "ami-05d2d839d4f73aafb"
+  ami           = "ami-01a00762f46d584a1"
   instance_type = "t2.micro"
   key_name      = "julykey-2026"
 
